@@ -29,3 +29,9 @@ model Trip {
   id        String   @id @default(cuid())
   updatedAt DateTime @updatedAt
 }
+
+model Wishlist {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
