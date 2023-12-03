@@ -23,3 +23,9 @@ model Listing {
   id        String   @id @default(cuid())
   updatedAt DateTime @updatedAt
 }
+
+model Trip {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}

@@ -13,6 +13,10 @@ import { ListingList } from "./listing/ListingList";
 import { ListingCreate } from "./listing/ListingCreate";
 import { ListingEdit } from "./listing/ListingEdit";
 import { ListingShow } from "./listing/ListingShow";
+import { TripList } from "./trip/TripList";
+import { TripCreate } from "./trip/TripCreate";
+import { TripEdit } from "./trip/TripEdit";
+import { TripShow } from "./trip/TripShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -52,6 +56,13 @@ const App = (): React.ReactElement => {
           edit={ListingEdit}
           create={ListingCreate}
           show={ListingShow}
+        />
+        <Resource
+          name="Trip"
+          list={TripList}
+          edit={TripEdit}
+          create={TripCreate}
+          show={TripShow}
         />
       </Admin>
     </div>
