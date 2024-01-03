@@ -21,27 +21,27 @@ export class ListingServiceBase {
     return this.prisma.listing.count(args);
   }
 
-  async findMany<T extends Prisma.ListingFindManyArgs>(
+  async listings<T extends Prisma.ListingFindManyArgs>(
     args: Prisma.SelectSubset<T, Prisma.ListingFindManyArgs>
   ): Promise<Listing[]> {
     return this.prisma.listing.findMany(args);
   }
-  async findOne<T extends Prisma.ListingFindUniqueArgs>(
+  async listing<T extends Prisma.ListingFindUniqueArgs>(
     args: Prisma.SelectSubset<T, Prisma.ListingFindUniqueArgs>
   ): Promise<Listing | null> {
     return this.prisma.listing.findUnique(args);
   }
-  async create<T extends Prisma.ListingCreateArgs>(
+  async createListing<T extends Prisma.ListingCreateArgs>(
     args: Prisma.SelectSubset<T, Prisma.ListingCreateArgs>
   ): Promise<Listing> {
     return this.prisma.listing.create<T>(args);
   }
-  async update<T extends Prisma.ListingUpdateArgs>(
+  async updateListing<T extends Prisma.ListingUpdateArgs>(
     args: Prisma.SelectSubset<T, Prisma.ListingUpdateArgs>
   ): Promise<Listing> {
     return this.prisma.listing.update<T>(args);
   }
-  async delete<T extends Prisma.ListingDeleteArgs>(
+  async deleteListing<T extends Prisma.ListingDeleteArgs>(
     args: Prisma.SelectSubset<T, Prisma.ListingDeleteArgs>
   ): Promise<Listing> {
     return this.prisma.listing.delete(args);

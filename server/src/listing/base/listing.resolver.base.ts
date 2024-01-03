@@ -18,11 +18,11 @@ import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
-import { DeleteListingArgs } from "./DeleteListingArgs";
+import { Listing } from "./Listing";
 import { ListingCountArgs } from "./ListingCountArgs";
 import { ListingFindManyArgs } from "./ListingFindManyArgs";
 import { ListingFindUniqueArgs } from "./ListingFindUniqueArgs";
-import { Listing } from "./Listing";
+import { DeleteListingArgs } from "./DeleteListingArgs";
 import { ListingService } from "../listing.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Listing)
@@ -57,7 +57,7 @@ export class ListingResolverBase {
   async listings(
     @graphql.Args() args: ListingFindManyArgs
   ): Promise<Listing[]> {
-    return this.service.findMany(args);
+    return this.service.listings(args);
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
@@ -70,7 +70,7 @@ export class ListingResolverBase {
   async listing(
     @graphql.Args() args: ListingFindUniqueArgs
   ): Promise<Listing | null> {
-    const result = await this.service.findOne(args);
+    const result = await this.service.listing(args);
     if (result === null) {
       return null;
     }
@@ -87,7 +87,7 @@ export class ListingResolverBase {
     @graphql.Args() args: DeleteListingArgs
   ): Promise<Listing | null> {
     try {
-      return await this.service.delete(args);
+      return await this.service.deleteListing(args);
     } catch (error) {
       if (isRecordNotFoundError(error)) {
         throw new GraphQLError(

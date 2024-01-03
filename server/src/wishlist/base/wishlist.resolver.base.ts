@@ -18,11 +18,11 @@ import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
-import { DeleteWishlistArgs } from "./DeleteWishlistArgs";
+import { Wishlist } from "./Wishlist";
 import { WishlistCountArgs } from "./WishlistCountArgs";
 import { WishlistFindManyArgs } from "./WishlistFindManyArgs";
 import { WishlistFindUniqueArgs } from "./WishlistFindUniqueArgs";
-import { Wishlist } from "./Wishlist";
+import { DeleteWishlistArgs } from "./DeleteWishlistArgs";
 import { WishlistService } from "../wishlist.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Wishlist)
@@ -57,7 +57,7 @@ export class WishlistResolverBase {
   async wishlists(
     @graphql.Args() args: WishlistFindManyArgs
   ): Promise<Wishlist[]> {
-    return this.service.findMany(args);
+    return this.service.wishlists(args);
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
@@ -70,7 +70,7 @@ export class WishlistResolverBase {
   async wishlist(
     @graphql.Args() args: WishlistFindUniqueArgs
   ): Promise<Wishlist | null> {
-    const result = await this.service.findOne(args);
+    const result = await this.service.wishlist(args);
     if (result === null) {
       return null;
     }
@@ -87,7 +87,7 @@ export class WishlistResolverBase {
     @graphql.Args() args: DeleteWishlistArgs
   ): Promise<Wishlist | null> {
     try {
-      return await this.service.delete(args);
+      return await this.service.deleteWishlist(args);
     } catch (error) {
       if (isRecordNotFoundError(error)) {
         throw new GraphQLError(

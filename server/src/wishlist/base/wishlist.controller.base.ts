@@ -22,11 +22,10 @@ import { WishlistService } from "../wishlist.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { WishlistCreateInput } from "./WishlistCreateInput";
-import { WishlistWhereInput } from "./WishlistWhereInput";
-import { WishlistWhereUniqueInput } from "./WishlistWhereUniqueInput";
-import { WishlistFindManyArgs } from "./WishlistFindManyArgs";
-import { WishlistUpdateInput } from "./WishlistUpdateInput";
 import { Wishlist } from "./Wishlist";
+import { WishlistFindManyArgs } from "./WishlistFindManyArgs";
+import { WishlistWhereUniqueInput } from "./WishlistWhereUniqueInput";
+import { WishlistUpdateInput } from "./WishlistUpdateInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -46,8 +45,10 @@ export class WishlistControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  async create(@common.Body() data: WishlistCreateInput): Promise<Wishlist> {
-    return await this.service.create({
+  async createWishlist(
+    @common.Body() data: WishlistCreateInput
+  ): Promise<Wishlist> {
+    return await this.service.createWishlist({
       data: data,
       select: {
         createdAt: true,
@@ -69,9 +70,9 @@ export class WishlistControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  async findMany(@common.Req() request: Request): Promise<Wishlist[]> {
+  async wishlists(@common.Req() request: Request): Promise<Wishlist[]> {
     const args = plainToClass(WishlistFindManyArgs, request.query);
-    return this.service.findMany({
+    return this.service.wishlists({
       ...args,
       select: {
         createdAt: true,
@@ -93,10 +94,10 @@ export class WishlistControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  async findOne(
+  async wishlist(
     @common.Param() params: WishlistWhereUniqueInput
   ): Promise<Wishlist | null> {
-    const result = await this.service.findOne({
+    const result = await this.service.wishlist({
       where: params,
       select: {
         createdAt: true,
@@ -124,12 +125,12 @@ export class WishlistControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  async update(
+  async updateWishlist(
     @common.Param() params: WishlistWhereUniqueInput,
     @common.Body() data: WishlistUpdateInput
   ): Promise<Wishlist | null> {
     try {
-      return await this.service.update({
+      return await this.service.updateWishlist({
         where: params,
         data: data,
         select: {
@@ -159,11 +160,11 @@ export class WishlistControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  async delete(
+  async deleteWishlist(
     @common.Param() params: WishlistWhereUniqueInput
   ): Promise<Wishlist | null> {
     try {
-      return await this.service.delete({
+      return await this.service.deleteWishlist({
         where: params,
         select: {
           createdAt: true,

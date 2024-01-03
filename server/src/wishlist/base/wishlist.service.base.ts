@@ -21,27 +21,27 @@ export class WishlistServiceBase {
     return this.prisma.wishlist.count(args);
   }
 
-  async findMany<T extends Prisma.WishlistFindManyArgs>(
+  async wishlists<T extends Prisma.WishlistFindManyArgs>(
     args: Prisma.SelectSubset<T, Prisma.WishlistFindManyArgs>
   ): Promise<Wishlist[]> {
     return this.prisma.wishlist.findMany(args);
   }
-  async findOne<T extends Prisma.WishlistFindUniqueArgs>(
+  async wishlist<T extends Prisma.WishlistFindUniqueArgs>(
     args: Prisma.SelectSubset<T, Prisma.WishlistFindUniqueArgs>
   ): Promise<Wishlist | null> {
     return this.prisma.wishlist.findUnique(args);
   }
-  async create<T extends Prisma.WishlistCreateArgs>(
+  async createWishlist<T extends Prisma.WishlistCreateArgs>(
     args: Prisma.SelectSubset<T, Prisma.WishlistCreateArgs>
   ): Promise<Wishlist> {
     return this.prisma.wishlist.create<T>(args);
   }
-  async update<T extends Prisma.WishlistUpdateArgs>(
+  async updateWishlist<T extends Prisma.WishlistUpdateArgs>(
     args: Prisma.SelectSubset<T, Prisma.WishlistUpdateArgs>
   ): Promise<Wishlist> {
     return this.prisma.wishlist.update<T>(args);
   }
-  async delete<T extends Prisma.WishlistDeleteArgs>(
+  async deleteWishlist<T extends Prisma.WishlistDeleteArgs>(
     args: Prisma.SelectSubset<T, Prisma.WishlistDeleteArgs>
   ): Promise<Wishlist> {
     return this.prisma.wishlist.delete(args);

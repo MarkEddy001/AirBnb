@@ -22,11 +22,10 @@ import { ListingService } from "../listing.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { ListingCreateInput } from "./ListingCreateInput";
-import { ListingWhereInput } from "./ListingWhereInput";
-import { ListingWhereUniqueInput } from "./ListingWhereUniqueInput";
-import { ListingFindManyArgs } from "./ListingFindManyArgs";
-import { ListingUpdateInput } from "./ListingUpdateInput";
 import { Listing } from "./Listing";
+import { ListingFindManyArgs } from "./ListingFindManyArgs";
+import { ListingWhereUniqueInput } from "./ListingWhereUniqueInput";
+import { ListingUpdateInput } from "./ListingUpdateInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -46,8 +45,10 @@ export class ListingControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  async create(@common.Body() data: ListingCreateInput): Promise<Listing> {
-    return await this.service.create({
+  async createListing(
+    @common.Body() data: ListingCreateInput
+  ): Promise<Listing> {
+    return await this.service.createListing({
       data: data,
       select: {
         createdAt: true,
@@ -69,9 +70,9 @@ export class ListingControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  async findMany(@common.Req() request: Request): Promise<Listing[]> {
+  async listings(@common.Req() request: Request): Promise<Listing[]> {
     const args = plainToClass(ListingFindManyArgs, request.query);
-    return this.service.findMany({
+    return this.service.listings({
       ...args,
       select: {
         createdAt: true,
@@ -93,10 +94,10 @@ export class ListingControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  async findOne(
+  async listing(
     @common.Param() params: ListingWhereUniqueInput
   ): Promise<Listing | null> {
-    const result = await this.service.findOne({
+    const result = await this.service.listing({
       where: params,
       select: {
         createdAt: true,
@@ -124,12 +125,12 @@ export class ListingControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  async update(
+  async updateListing(
     @common.Param() params: ListingWhereUniqueInput,
     @common.Body() data: ListingUpdateInput
   ): Promise<Listing | null> {
     try {
-      return await this.service.update({
+      return await this.service.updateListing({
         where: params,
         data: data,
         select: {
@@ -159,11 +160,11 @@ export class ListingControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  async delete(
+  async deleteListing(
     @common.Param() params: ListingWhereUniqueInput
   ): Promise<Listing | null> {
     try {
-      return await this.service.delete({
+      return await this.service.deleteListing({
         where: params,
         select: {
           createdAt: true,
